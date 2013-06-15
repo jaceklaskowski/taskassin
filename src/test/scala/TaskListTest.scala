@@ -10,17 +10,20 @@ import org.junit.runner.RunWith
 @RunWith(classOf[JUnitRunner])
 class TaskTest extends Spec with ShouldMatchers {
 
-  describe("Task list") {
-    it("should return the most current task") {
+  describe("List of three tasks (with 5 minutes in between)") {
+    it("should pop tasks in due earlier order") {
       val t1 = new Task("t1", DateTime.now)
       val t2 = new Task("t2", DateTime.now + 2.minutes)
 
       /* http://mkaz.com/solog/how-to-sort-collections-in-scala */
-      /* sort by date */
-      def compByTime(t1: Task, t2: Task) = t1.time < t2.time
+      /* sort by due date */
+      def compByDueDate(t1: Task, t2: Task) = t1.due < t2.due
 
-      val ts = List(t2, t1) sortWith compByTime
+      val ts = List(t2, t1) sortWith compByDueDate
       ts.head should equal(t1)
+    }
+    it("should return the tasks for today") {
+      pending
     }
   }
 }
